@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Application</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    let currentUser = ''; // To store the current user's name
+
+    function selectPerson(name) {
+      document.getElementById('chat-box').style.display = 'block';
+      document.getElementById('selected-person').innerText = name;
+      document.getElementById('messages').innerHTML = ''; // Clear previous messages
+      socket.emit('join_room', name);
+    }
+
+    socket.on('previous_messages', function (messages) {
+      const messagesContainer = document.getElementById('messages');
+      messages.forEach(message => {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+        if (message.from === currentUser) {
+          messageElement.classList.add('sent');
+          messageElement.innerText = `You: ${message.message}`;
+        } else {
+          messageElement.classList.add('received');
+          messageElement.innerText = `${message.from}: ${message.message}`;
+        }
+        messagesContainer.appendChild(messageElement);
+      });
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    });
+
+    socket.on('receive_message', function (message) {
+      const messages = document.getElementById('messages');
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message');
+      if (message.from === currentUser) {
+        messageElement.classList.add('sent');
+        messageElement.innerText = `You: ${message.message}`;
+      } else {
+        messageElement.classList.add('received');
+        messageElement.innerText = `${message.from}: ${message.message}`;
+      }
+      messages.appendChild(messageElement);
+      messages.scrollTop = messages.scrollHeight;
+    });
+
+    function sendMessage() {
+      const messageInput = document.getElementById('message-input');
+      const message = messageInput.value;
+      const to = document.getElementById('selected-person').innerText;
+      socket.emit('send_message', {
+        room: to,
+        from: currentUser, // Send the current user's name
+        to,
+        message,
+      });
+      messageInput.value = '';
+    }
+
+    // Prompt for the current user's name
+    window.onload = function () {
+      currentUser = prompt('Enter your name');
+    };
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Contacts</h2>
+      <ul>
+        <% persons.forEach(person => { %>
+          <li><a href="#" onclick="selectPerson('<%= person.name %>')"><%= person.name %></a></li>
+        <% }) %>
+      </ul>
+    </div>
+    <div class="chat-container">
+      <div id="chat-box" style="display: none;">
+        <h2>Chatting with <span id="selected-person"></span></h2>
+        <div id="messages" class="messages">
+          <!-- Messages will be displayed here -->
+        </div>
+        <div class="input-container">
+          <input type="text" id="message-input" placeholder="Type your message">
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

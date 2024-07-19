@@ -1,0 +1,124 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e5ddd5;
+  }
+  
+  .container {
+    display: flex;
+    width: 90%;
+    height: 90%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .sidebar {
+    width: 30%;
+    border-right: 1px solid #ccc;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f8f9fa;
+    overflow-y: auto; /* Ensure sidebar is scrollable if too many contacts */
+  }
+  
+  .sidebar h2 {
+    margin-top: 0;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin-bottom: 10px;
+  }
+  
+  .sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .chat-container {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #chat-box {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative; /* Positioning context for absolute elements */
+  }
+  
+  #chat-box h2 {
+    margin: 0;
+    padding: 20px;
+    background-color: #075e54;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #ece5dd;
+    max-height: 60vh; /* Limit maximum height and enable scrolling */
+  }
+  
+  .message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    width: fit-content;
+    max-width: 80%; /* Adjusted for better readability */
+  }
+  
+  .sent {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+  }
+  
+  .received {
+    background-color: #fff;
+    align-self: flex-start;
+  }
+  
+  .input-container {
+    display: flex;
+    padding: 10px;
+    background-color: #f1f1f1;
+    position: absolute;
+    bottom: 0; /* Stick to the bottom of the chat box */
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  #message-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #075e54;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  button:hover {
+    background-color: #064e48;
+  }
+  
