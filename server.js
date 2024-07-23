@@ -17,7 +17,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
 
     // Initial setup to add 5 persons
     async function setupInitialPersons() {
-      const persons = ['Alice', 'Bob', 'Charlie', 'David', 'Eve'];
+      const persons = ['Avengers', 'league', 'Calgart', 'titan', 'nowhere'];
 
       // Check if the persons already exist in the database
       const existingPersons = await Person.find({ name: { $in: persons } });
